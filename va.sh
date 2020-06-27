@@ -1,6 +1,7 @@
 TEXT=data/quora
 DATA=data/quora/quora_30
 DATATEST=data/quora/quora_30_test
+NAME=model_cat_enum_b6
 
 preprocess_bpe(){
     # Preprocesses the data in data/iwslt14-de-en
@@ -125,10 +126,9 @@ train_cat_wsram_b6() {
 train_cat_enum_b6() {
     gpuid=0
     seed=3435
-    name=model_cat_enum_b6
     python train.py \
         -data $DATA \
-        -save_model $name -gpuid $gpuid -seed $seed \
+        -save_model $NAME -gpuid $gpuid -seed $seed \
         -mode enum \
         -batch_size 6 \
         -encoder_type brnn \
