@@ -226,7 +226,7 @@ eval_cat() {
 gen_cat() {
     model=$1
     python translate.py \
-        -src data/iwslt14-de-en/test.de.bpe \
+        -src ${TEXT}/test.txt.src \
         -beam_size 10 \
         -batch_size 2 \
         -length_penalty wu \
@@ -234,6 +234,7 @@ gen_cat() {
         -eos_norm 3 \
         -gpu 0 \
         -output $model.out \
+        -output2 $model.tgt \
         -model $model
 }
 
