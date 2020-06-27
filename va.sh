@@ -1,26 +1,26 @@
-TEXT=data/iwslt14-de-en
-DATA=data/iwslt/iwslt_125
-DATATEST=data/iwslt/iwslt_125_test
+TEXT=data/quora
+DATA=data/quora/quora_30
+DATATEST=data/quora/quora_30_test
 
 preprocess_bpe(){
     # Preprocesses the data in data/iwslt14-de-en
     # Since we are using BPE, we do not force any unks.
     mkdir -p data/iwslt
     python preprocess.py \
-        -train_src ${TEXT}/train.de.bpe -train_tgt ${TEXT}/train.en.bpe \
-        -valid_src ${TEXT}/valid.de.bpe -valid_tgt ${TEXT}/valid.en.bpe \
-        -src_vocab_size 80000 -tgt_vocab_size 80000 \
+        -train_src ${TEXT}/train.txt.src -train_tgt ${TEXT}/train.txt.tgt.tagged \
+        -valid_src ${TEXT}/val.txt.src -valid_tgt ${TEXT}/val.txt.tgt.tagged \
+        -src_vocab_size 20000 -tgt_vocab_size 20000 \
         -src_words_min_frequency 0 -tgt_words_min_frequency 0 \
-        -src_seq_length 125 -tgt_seq_length 125 \
+        -src_seq_length 30 -tgt_seq_length 30 \
         -save_data $DATA
 
     # Get the test data for evaluation
     python preprocess.py \
-        -train_src ${TEXT}/train.de.bpe -train_tgt ${TEXT}/train.en.bpe \
-        -valid_src ${TEXT}/test.de.bpe -valid_tgt ${TEXT}/test.en.bpe \
-        -src_vocab_size 80000 -tgt_vocab_size 80000 \
+        -train_src ${TEXT}/train.txt.src -train_tgt ${TEXT}/train.txt.tgt.tagged \
+        -valid_src ${TEXT}/test.txt.src -valid_tgt ${TEXT}/test.txt.tgt.tagged \
+        -src_vocab_size 20000 -tgt_vocab_size 20000 \
         -src_words_min_frequency 0 -tgt_words_min_frequency 0 \
-        -src_seq_length 125 -tgt_seq_length 125 \
+        -src_seq_length 30 -tgt_seq_length 30 \
         -leave_valid \
         -save_data $DATATEST
 }
