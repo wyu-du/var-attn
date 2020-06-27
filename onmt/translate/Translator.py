@@ -13,11 +13,9 @@ import onmt.io
 import onmt.opts
 
 
-def make_translator(opt, report_score=True, out_file=None, gold_file=None):
+def make_translator(opt, report_score=True, out_file=None):
     if out_file is None:
         out_file = codecs.open(opt.output, 'w', 'utf-8')
-    if gold_file is None:
-        gold_file = codecs.open(opt.output2, 'w', 'utf-8')
 
     if opt.gpu > -1:
         torch.cuda.set_device(opt.gpu)
@@ -41,7 +39,7 @@ def make_translator(opt, report_score=True, out_file=None, gold_file=None):
                         "data_type", "replace_unk", "gpu", "verbose"]}
 
     translator = Translator(model, fields, global_scorer=scorer,
-                            out_file=out_file, gold_file=gold_file, 
+                            out_file=out_file, 
                             report_score=report_score,
                             copy_attn=model_opt.copy_attn,
                             eos_norm=opt.eos_norm, **kwargs)
@@ -176,11 +174,8 @@ class Translator(object):
 
                 n_best_preds = [" ".join(pred)
                                 for pred in trans.pred_sents[:self.n_best]]
-                gold_sent = " ".join(trans.gold_sent)
                 self.out_file.write('\n'.join(n_best_preds) + '\n')
                 self.out_file.flush()
-                self.gold_file.write(gold_sent + '\n')
-                self.gold_file.flush()
 
                 if self.verbose:
                     sent_number = next(counter)

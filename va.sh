@@ -234,7 +234,6 @@ gen_cat() {
         -eos_norm 3 \
         -gpu 0 \
         -output $model.out \
-        -output2 $model.tgt \
         -model $model
 }
 
