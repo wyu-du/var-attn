@@ -239,7 +239,7 @@ gen_cat() {
 
 gen_cat_k() {
     model=$1
-    for k in 1 2 3 4 5; do
+    for k in 1 2 3 4 5 6 7 8 9 10; do
         python translate.py \
             -src data/iwslt14-de-en/test.de.bpe \
             -beam_size 10 \
