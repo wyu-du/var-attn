@@ -228,7 +228,7 @@ class VariationalAttention(nn.Module):
                 # mask : N x T x S
                 mask = sequence_mask(memory_lengths)
                 mask = mask.unsqueeze(1)  # Make it broadcastable.
-                scores.data.masked_fill_(1 - mask, -float('inf'))
+                scores.data.masked_fill_(~mask, -float('inf'))
             if self.k > 0 and self.k < scores.size(-1):
                 topk, idx = scores.data.topk(self.k)
                 new_attn_score = torch.zeros_like(scores.data).fill_(float("-inf"))

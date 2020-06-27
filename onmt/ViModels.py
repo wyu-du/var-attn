@@ -82,7 +82,7 @@ class InferenceNetwork(nn.Module):
             if src_lengths is not None:
                 mask = sequence_mask(src_lengths)
                 mask = mask.unsqueeze(1)
-                scores.data.masked_fill_(1-mask, self.mask_val)
+                scores.data.masked_fill_(~mask, self.mask_val)
             # scoresF should be softmax
             log_scores = F.log_softmax(scores, dim=-1)
             scores = F.softmax(scores, dim=-1)
